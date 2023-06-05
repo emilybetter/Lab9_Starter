@@ -102,6 +102,112 @@
 
     // Start your code here
     // You may move this JS to another file if you wish
+    
+    errorBtns[0].addEventListener('click', function() {
+      console.log("Console Log message");
+    });
+    errorBtns[1].addEventListener('click', function() {
+      console.error("Console Error message");
+    });
+    errorBtns[2].addEventListener('click', function() {
+      console.count("Count Button");
+    });
+    errorBtns[3].addEventListener('click', function() {
+      console.warn("Console Warn");
+    });
+    errorBtns[4].addEventListener('click', function() {
+      console.assert(5 == 3, "they are not equal");
+    });
+    errorBtns[5].addEventListener('click', function () {
+      console.clear();
+    });
+    errorBtns[6].addEventListener('click', function () {
+      console.dir(errorBtns[6]);
+    });
+    errorBtns[7].addEventListener('click', function () {
+      console.dirxml(errorBtns[7]);
+    });
+    errorBtns[8].addEventListener('click', function () {
+      console.group();
+    });
+    errorBtns[9].addEventListener('click', function () {
+      console.groupEnd();
+    });
+    errorBtns[10].addEventListener('click', function () {
+      var ex = [
+        {
+          fruit: "orange", 
+          color: "orange"
+        },
+        {
+          fruit: "strawberry", 
+          color: "red"
+        }, 
+        {
+          fruit: "banana", 
+          color: "yellow"
+        }
+      ];
+      console.table(ex);
+    });
+    
+    errorBtns[11].addEventListener('click', function () {
+      console.time("Timer start");
+    });
+    errorBtns[12].addEventListener('click', function () {
+      console.timeEnd("Timer end");
+    });
+    errorBtns[13].addEventListener('click', function handleBtnClick () {
+      const deep = () => { deeper(); };
+      const deeper = () => { deepest(); };
+      const deepest = () => { console.trace();};
+      deep();
+    });
+    errorBtns[14].addEventListener("click", (event) => {
+      throw new Error("Trigger Global Error");
+    });
+
+    window.addEventListener("error", (event) => {
+      console.log("This is a global error");
+    })
+  
+
+    // Explore: Step 3 - Trying Try/Catch
+    errorBtns[14].addEventListener('click', function handleBtnClick () {
+      let json = '{ "age": 30 }'; 
+      try {
+        let user = JSON.parse(json);
+        // undefined triggering the reference error
+        boom ();
+        // throw syntax error if no user name
+        if (!user.name) { 
+          throw new SyntaxError(); // unexpected error because the reference error occurs
+        }
+      } catch (err) {
+        console.log("Sadly an error happened my friend");
+        if (err instanceof ReferenceError) {
+          console.error("Uncaught " + err.stack); // "ReferenceError" for accessing an undefined variable boom
+        }
+      } finally {
+        // always run this block no matter block caught or not
+        console.log("Finally block finished");
+      }
+    });
+    
+    function abs(num) {
+      try {
+        if (typeof num === "number") {
+          console.log(`The absolute value of ${num} is ${Math.abs(num)}.`);
+        } else {
+          throw new SyntaxError("Input Type Error");
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        console.log(`Input: ${num}.`);
+        console.log(`Data types: ${typeof num}.`);
+      }
+    }
   </script>
 </body>
 
