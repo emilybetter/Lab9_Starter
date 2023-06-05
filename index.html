@@ -177,37 +177,54 @@
       let json = '{ "age": 30 }'; 
       try {
         let user = JSON.parse(json);
-        // undefined triggering the reference error
         boom ();
-        // throw syntax error if no user name
         if (!user.name) { 
-          throw new SyntaxError(); // unexpected error because the reference error occurs
+          throw new SyntaxError("no name"); 
         }
       } catch (err) {
-        console.log("Sadly an error happened my friend");
+        console.log("an error occurred");
         if (err instanceof ReferenceError) {
-          console.error("Uncaught " + err.stack); // "ReferenceError" for accessing an undefined variable boom
+          console.error("undefined " + err.stack); 
         }
       } finally {
-        // always run this block no matter block caught or not
         console.log("Finally block finished");
       }
     });
     
-    function abs(num) {
-      try {
-        if (typeof num === "number") {
-          console.log(`The absolute value of ${num} is ${Math.abs(num)}.`);
-        } else {
-          throw new SyntaxError("Input Type Error");
-        }
-      } catch (error) {
-        console.error(error);
-      } finally {
-        console.log(`Input: ${num}.`);
-        console.log(`Data types: ${typeof num}.`);
+    //step 4
+    class DivideByZeroError extends Error {
+          constructor(message) {
+              super(message);
+              this.name = "DivideByZeroError";
+          }
+      }
+    
+    function division (firstNum, secondNum) {
+      if (secondNum == 0) {
+        throw new ZeroDivisionCustomError("second operand cannot be zero");
       }
     }
+    try {
+      division(3, 0);
+    } catch (err) {
+      console.error(err.stack);
+    } finally {
+      console.log("Finally block finished");
+    }
+    
+    window.onerror = function (message, url, line, column, error) {
+      console.log("A global error occurred");
+      console.log("Message: ", message);
+      console.log("URL: ", url);
+      console.log("Line: ", line);
+      console.log("Column: ", column);
+      console.log("Error: ", error);
+    };
+    
+    function readData() {
+      badFunction();
+    }
+    readData();
   </script>
 </body>
 
